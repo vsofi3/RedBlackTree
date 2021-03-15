@@ -1,0 +1,141 @@
+"""Delete Fixup"""
+while((currentNode is not self._root) and currentNode.getColor() == "black"):
+            #Question 1: is CurrentNode a Left Child?
+            if currentNode == currentNode.getParent().getLChild():
+                node = currentNode.getParent().getRChild()
+                if node.getColor() == "red":
+                    node.setColor("black")
+                    currentNode.getParent().setColor("red")
+                    self.leftRotate(currentNode.getParent())
+                    node = currentNode.getParent().getRChild()
+                if node.getLChild().getColor() == "black" and node.getRChild().getColor() == "black":
+                    node.setColor("red")
+                    currentNode = currentNode.getParent()
+                else:
+                    if(currentNode.getRChild().getColor() == "black"):
+                        node.getLChild().setColor("black")
+                        node.setColor("red")
+                        self.rightRotate(node)
+                        node = currentNode.getParent().getRChild()
+                    node.setColor(currentNode.getParent().getColor())
+                    currentNode.getParent().setColor("black")
+                    node.getRChild().setColor("black")
+                    self.leftRotate(currentNode.getParent())
+                    currentNode = self._root
+            else:
+                node = currentNode.getParent().getLChild()
+                if node.getColor() == "red":
+                    node.setColor("black")
+                    currentNode.getParent().setColor("red")
+                    self.rightRotate(currentNode.getParent())
+                    node = currentNode.getParent().getLChild()
+                if node.getRChild().getColor() == "black" and node.getLChild().getColor() == "black":
+                    node.setColor("red")
+                    currentNode = currentNode.getParent()
+                else:
+                    if(currentNode.getLChild().getColor() == "black"):
+                        node.getRChild().setColor("black")
+                        node.setColor("red")
+                        self.leftRotate(node)
+                        node = currentNode.getParent().getLChild()
+                    node.setColor(currentNode.getParent().getColor())
+                    currentNode.getParent().setColor("black")
+                    node.getLChild().setColor("black")
+                    self.rightRotate(currentNode.getParent())
+                    currentNode = self._root
+
+        self._root.setColor("black") #aligned with the while statement
+
+
+
+
+"""JARED's DELETE FIXUP"""
+
+
+def deleteFixup(self, currentNode):
+    """
+    Hint: receives a node and fixes up the tree,
+          balancing from that node.
+    """
+    while ((currentNode is not self._root) and currentNode.getColor() == "black"):
+        # Question 1: is CurrentNode a Left Child?
+        if (currentNode.isLeftChild()):
+            sibling = currentNode.getParent().getRChild()
+            if (sibling.getColor() == "red"):
+                sibling.setColor("black")
+                currentNode.getParent().setColor("red")
+                self.leftRotate(currentNode.getParent())
+                sibling = sibling.getParent().getRChild()
+
+            elif sibling.getLChild().getColor() == "black" and sibling.getRChild().getColor() == "black":
+                sibling.setColor("red")
+                curentNode = currentNode.getParent()
+            else:
+                if (sibling.getRChild.getColor == "black"):
+                    sibling.getLChild.setColor("black")
+                    sibling.setColor("red")
+                    self.rightRotate(currentNode.getParent())
+                    sibling = currentNode.getParent().getRChild()
+                else:
+                    sibling.setColor(currentNode.getParent().getColor())
+                    currentNode.getParent().setColor("black")
+                    sibling.getRChild().setColor("black")
+                    self.leftRotate(currentNode.getParent())
+                    currentNode = self._root
+
+        if currentNode.isRightChild():
+            sibling = currentNode.getParent().getLChild()
+            if (sibling.getColor() == "red"):
+                sibling.setColor("black")
+                currentNode.getParent().setColor("red")
+                self.rightRotate(currentNode.getParent())
+                sibling = sibling.getParent().getLChild()
+
+            elif sibling.getRChild().getColor() == "black" and sibling.getLChild().getColor() == "black":
+                sibling.setColor("red")
+                curentNode = currentNode.getParent()
+            else:
+                if (sibling.getLChild.getColor == "black"):
+                    sibling.getRChild.setColor("black")
+                    sibling.setColor("red")
+                    self.leftRotate(currentNode.getParent())
+                    sibling = currentNode.getParent().getLChild()
+                else:
+                    sibling.setColor(currentNode.getParent().getColor())
+                    currentNode.getParent().setColor("black")
+                    sibling.getLChild().setColor("black")
+                    self.rightRotate(currentNode.getParent())
+                    currentNode = self._root
+
+    currentNode.setColor("black")
+
+
+
+    def hasLeftChild(self):
+        """
+        Description: This method returns true if the current node
+                     has a left child
+        """
+        returnValue = False
+        cond1 = not self._leftChild.isSentinel()
+        cond2 = self._leftChild._parent is self
+        if(cond1 and cond2):
+                returnValue = True
+        return returnValue
+
+    def hasRightChild(self):
+        """ This method returns true|false depending on if the current
+            node has a right child or not."""
+        returnValue = False
+        cond1 = not self._rightChild.isSentinel()
+        cond2 = self._rightChild._parent is self
+        if(cond1 and cond2):
+                returnValue = True
+        return returnValue
+
+    def hasOnlyOneChild(self):
+        """ Returns True if the current node has only one child."""
+
+        LC = self.hasLeftChild()
+        RC = self.hasRightChild()
+        return (LC and not RC) or (not LC and RC)
